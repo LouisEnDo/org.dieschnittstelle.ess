@@ -9,7 +9,6 @@ import static org.dieschnittstelle.ess.basics.reflection.ReflectedStockItemBuild
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static org.dieschnittstelle.ess.utils.Utils.*;
 
@@ -46,7 +45,7 @@ public class ShowAnnotations {
             var fieldsWithValues = new ArrayList<String>();
             for (Field field : klass.getDeclaredFields()) {
                 String accessorName = getAccessorNameForField("get", field.getName());
-                ;
+
                 Method accessor = klass.getDeclaredMethod(accessorName);
 
                 fieldsWithValues.add(String.format("%s:%s", field.getName(), accessor.invoke(instance).toString()));
