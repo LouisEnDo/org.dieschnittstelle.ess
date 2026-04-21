@@ -4,13 +4,16 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.URI;
 import java.util.List;
 import java.util.concurrent.Future;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.logging.log4j.Logger;
@@ -179,6 +182,26 @@ public class ShowTouchpointService {
 
         createClient();
 
+        try{
+            HttpDelete request = new HttpDelete("http://localhost:8080/api/touchpoints");
+
+            long id = tp.getId();
+
+            logger.info("deleteTouchpoint(): will delete id: " + id);
+
+            URI uri = new URIBuilder(request.getURI()).addParameter("id", Long.toString(id)).build();
+
+            request.setURI(uri);
+
+            Future<HttpResponse> responseFuture = client.execute(request, null);
+
+            HttpResponse response = responseFuture.get();
+
+            logger.debug(response.getStatusLine());
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         logger.debug("client running: {}", client.isRunning());
 
     }
