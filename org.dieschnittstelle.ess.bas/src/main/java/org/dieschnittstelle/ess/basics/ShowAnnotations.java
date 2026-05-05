@@ -3,6 +3,7 @@ package org.dieschnittstelle.ess.basics;
 
 import org.dieschnittstelle.ess.basics.annotations.AnnotatedStockItemBuilder;
 import org.dieschnittstelle.ess.basics.annotations.StockItemProxyImpl;
+import org.dieschnittstelle.ess.basics.annotations.DisplayAs;
 
 import static org.dieschnittstelle.ess.basics.reflection.ReflectedStockItemBuilder.getAccessorNameForField;
 
@@ -48,7 +49,20 @@ public class ShowAnnotations {
 
                 Method accessor = klass.getDeclaredMethod(accessorName);
 
-                fieldsWithValues.add(String.format("%s:%s", field.getName(), accessor.invoke(instance).toString()));
+                //BAS3 Find display as attribute use as name if present
+                // Approach from Dariusz check if field.isAnnotationPresent(DisplayAs.class)
+                // then access field.getAnnotation(DisplayAs.class).value() directly
+
+                var displayAs = field.getAnnotation(DisplayAs.class);
+
+                String name;
+                if (displayAs != null) {
+                    name = displayAs.value();
+                } else {
+                    name = field.getName();
+                }
+
+                fieldsWithValues.add(String.format("%s:%s", name, accessor.invoke(instance).toString()));
             }
 
             String fieldsString = String.join(", ", fieldsWithValues);
