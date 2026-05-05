@@ -41,20 +41,19 @@ public class ProductCRUDRESTClient {
 		return created;
 	}
 
-	// TODO: activate this method for testing JRS3
-//	public AbstractProduct createCampaign(AbstractProduct prod) {
-//		AbstractProduct created = serviceProxy.createProduct(prod);
-//		// as a side-effect we set the id of the created product on the argument before returning
-//		prod.setId(created.getId());
-//		return created;
-//	}
+	public AbstractProduct createCampaign(AbstractProduct prod) {
+		AbstractProduct created = serviceProxy.createProduct(prod);
+		// as a side-effect we set the id of the created product on the argument before returning
+		prod.setId(created.getId());
+		return created;
+	}
 
 	public List<?> readAllProducts() {
 		return serviceProxy.readAllProducts();
 	}
 
 	public AbstractProduct updateProduct(AbstractProduct update) {
-		return serviceProxy.updateProduct(update.getId(),(IndividualisedProductItem)update);
+		return serviceProxy.updateProduct(update.getId(),update);
 	}
 
 	public boolean deleteProduct(long id) {
