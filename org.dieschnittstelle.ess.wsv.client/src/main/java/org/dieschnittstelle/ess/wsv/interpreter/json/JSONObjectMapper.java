@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import org.apache.logging.log4j.Logger;
 
+import static org.dieschnittstelle.ess.utils.Utils.show;
+
 /**
  * 
  * CAUTION: THIS IS A RATHER QUICK&DIRTY SOLUTION... !!!
@@ -215,9 +217,17 @@ public class JSONObjectMapper {
 				// info present
 				if (Modifier.isAbstract(((Class) type).getModifiers())) {
 					// TODO: include a handling for abstract classes considering
-					// the JsonTypeInfo annotation that might be set on type
-					throw new ObjectMappingException(
-							"cannot instantiate abstract class: " + type);
+					if( ((Class) type).isAnnotationPresent(JsonTypeInfo.class)){
+						JsonTypeInfo typeInfo = ((Class<?>) type).getAnnotation(JsonTypeInfo.class);
+						String className = ((ObjectNode) json).get(typeInfo.property()).textValue();
+						type = Class.forName(className);
+						obj = ((Class<?>) type).getDeclaredConstructor().newInstance();
+					} else {
+
+						// the JsonTypeInfo annotation that might be set on type
+						throw new ObjectMappingException(
+								"cannot instantiate abstract class: " + type);
+					}
 				} else {
 					obj = ((Class) type).newInstance();
 				}
