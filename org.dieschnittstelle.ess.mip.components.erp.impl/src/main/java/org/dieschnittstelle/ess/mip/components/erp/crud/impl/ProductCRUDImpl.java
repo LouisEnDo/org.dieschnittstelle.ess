@@ -3,6 +3,7 @@ package org.dieschnittstelle.ess.mip.components.erp.crud.impl;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.dieschnittstelle.ess.entities.erp.AbstractProduct;
 import org.dieschnittstelle.ess.entities.erp.Campaign;
@@ -26,12 +27,13 @@ public class ProductCRUDImpl implements ProductCRUD {
 
     @Override
     public List<AbstractProduct> readAllProducts() {
-        return null;
+        Query query = em.createQuery("SELECT p FROM AbstractProduct p");
+        return query.getResultList();
     }
 
     @Override
     public AbstractProduct updateProduct(AbstractProduct update) {
-        return null;
+        return em.merge(update);
     }
 
     @Override
@@ -41,7 +43,8 @@ public class ProductCRUDImpl implements ProductCRUD {
 
     @Override
     public boolean deleteProduct(long productID) {
-        return false;
+        em.remove(this.readProduct(productID));
+        return true;
     }
 
     @Override
