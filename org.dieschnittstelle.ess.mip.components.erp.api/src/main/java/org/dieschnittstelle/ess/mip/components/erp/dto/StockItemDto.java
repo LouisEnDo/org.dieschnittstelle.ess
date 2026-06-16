@@ -5,6 +5,10 @@ public class StockItemDto {
     private long posId;
     private int units;
 
+    public StockItemDto() {
+
+    }
+
     public StockItemDto(long productId, long posId, int units) {
         this.productId = productId;
         this.posId = posId;

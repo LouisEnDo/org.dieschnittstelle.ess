@@ -47,8 +47,7 @@ public class ProductCRUDClient implements ProductCRUD {
 
 	@Override
 	public List<Campaign> getCampaignsForProduct(long productID) {
-//		return serviceProxy.getCampaignsForProduct(productID);
-		return null;
+		return serviceProxy.getCampaignsForProduct(productID);
 	}
 
 }
