@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.ws.rs.*;
 import org.dieschnittstelle.ess.entities.erp.AbstractProduct;
 import org.dieschnittstelle.ess.entities.erp.Campaign;
+import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -16,6 +17,7 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 @Path("/products")
 @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
+@RegisterRestClient
 public interface ProductCRUD {
 
 	@POST

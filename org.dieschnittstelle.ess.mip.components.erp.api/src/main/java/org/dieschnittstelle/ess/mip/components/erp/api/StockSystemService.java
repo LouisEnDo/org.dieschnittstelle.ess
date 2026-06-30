@@ -5,6 +5,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import org.dieschnittstelle.ess.entities.erp.IndividualisedProductItem;
 import org.dieschnittstelle.ess.mip.components.erp.dto.StockItemDto;
+import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @Path("/stock")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
+@RegisterRestClient
 public interface StockSystemService {
 
 	/**
